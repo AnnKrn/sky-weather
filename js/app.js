@@ -11,8 +11,31 @@
 //                 headers: myHeaders,
 //             };
 // Failed to load https://api.darksky.net/forecast/d96034d5eefa15652e80d2d363658c1e/19.422734,-99.161364: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
-function getData() {
-    fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/d96034d5eefa15652e80d2d363658c1e/19.422734,-99.161364`).then(function(response){
+
+// Geolocalización automatica con html5
+$(document).ready(function(){
+    getLocation()
+});
+
+function getLocation() {
+    if (navigator.geolocation) {
+        // console.log(navigator)
+        navigator.geolocation.getCurrentPosition(showPosition);
+
+    } else {
+        console.log('Geolocation is not suported by this browser')
+    }
+};
+
+function showPosition (position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    // console.log(longitude) 
+    getData(latitude, longitude)
+}
+
+function getData(latitude, longitude) {
+    fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/d96034d5eefa15652e80d2d363658c1e/${latitude},${longitude}`).then(function(response){
         return response.json().then(function(json){
             getInfoWeather(json)
         });
@@ -21,7 +44,7 @@ function getData() {
 
 getData()
 function getInfoWeather(json) {
-    console.log(json)
+    // console.log(json)
     const icon = json.currently.icon;
     const wind = json.currently.windSpeed;
     const humidity = json.currently.humidity;
