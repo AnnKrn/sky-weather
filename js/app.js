@@ -11,8 +11,35 @@
 //                 headers: myHeaders,
 //             };
 // Failed to load https://api.darksky.net/forecast/d96034d5eefa15652e80d2d363658c1e/19.422734,-99.161364: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
-function getData() {
-    fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/d96034d5eefa15652e80d2d363658c1e/19.422734,-99.161364`).then(function(response){
+
+// Geolocalización automatica con html5
+$(document).ready(function(){
+    getLocation()
+});
+
+function getLocation() {
+    if (navigator.geolocation) {
+        // console.log(navigator)
+        // depende de la respuesta del usuario
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+
+    } else {
+        console.log('Geolocation is not suported by this browser')
+    }
+};
+
+function showPosition (position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    // console.log(longitude) 
+    getData(latitude, longitude)
+}
+
+function showError () {
+    alert('algo salio mal')
+}
+function getData(latitude, longitude) {
+    fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/d96034d5eefa15652e80d2d363658c1e/${latitude},${longitude}`).then(function(response){
         return response.json().then(function(json){
             getInfoWeather(json)
         });
@@ -21,7 +48,7 @@ function getData() {
 
 getData()
 function getInfoWeather(json) {
-    console.log(json)
+    // console.log(json)
     const icon = json.currently.icon;
     const wind = json.currently.windSpeed;
     const humidity = json.currently.humidity;
@@ -41,10 +68,22 @@ function paintWeather(icon, wind, humidity, uvIndex, pressure) {
         <h1 id="degres" class="text-center col-xs-12"></h1>
     </div>
     <div class="row">
-        <h3>Wind </h3> <span class="text-right">${wind}</span>
-        <h3>Humidity <span class="text-right">${humidity}</span></h3>
-        <h3>UV Index <span class="text-right">${uvIndex}</span></h3>
-        <h3>Pressure <span class="text-right">${pressure}</span></h3>
+        <div class="row">
+            <div class="col-md-6"><h3>Wind</h3></div>
+            <div class="col-md-6"><h3 class="text-right" >${wind}</h3></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><h3>Humidity</h3></div>
+            <div class="col-md-6"><h3 class="text-right">${humidity}</h3></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><h3>UV Light</h3></div>
+            <div class="col-md-6"><h3 class="text-right">${uvIndex}</h3></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><h3>Pressure</h3></div>
+            <div class="col-md-6"><h3 class="text-right">${pressure}</h3></div>
+        </div>
     </div>`
 
     const containerWeather = document.getElementById('weather_container');
