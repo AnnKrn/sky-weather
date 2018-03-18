@@ -51,20 +51,34 @@ function getData(latitude, longitude) {
 };
 
 getData()
+// funcion de data general
 function getInfoWeather(json) {
-    console.log(json)
+    // console.log(json)
     const degrees = json.currently.temperature;
     const icon = json.currently.icon;
     const wind = json.currently.windSpeed;
     const humidity = json.currently.humidity;
     const uvIndex = json.currently.uvIndex;
     const pressure = json.currently.pressure;
-    
+    getInfoWekly(json)
     paintWeather(degrees, wind, humidity, uvIndex, pressure)
     skycons(icon)
 };
 
-
+// funcion de data semanal
+function getInfoWekly(json) {
+    // console.log(json)
+    const week = json.daily.data;
+    console.log(week)
+    week.forEach(item => {
+        const maxTemperature = item.apparentTemperatureMax
+        const minTemperature = item.apparentTemperatureMin
+        const weekIcon = item.icon
+        paintWeek(maxTemperature,minTemperature)
+        // skyconsWeek(weekIcon)
+    })
+}
+// funcion que pinta prediccion principal
 function paintWeather(degrees, wind, humidity, uvIndex, pressure) {
     templete =`<div class="row">
     <canvas id="icon-weather" width="100" height="100" class="col-xs-6 col-xs-offset-3"></canvas>
@@ -115,6 +129,89 @@ function paintWeather(degrees, wind, humidity, uvIndex, pressure) {
     containerWeather.innerHTML = templete
 };
 
+// funcion que pinta datos de la semana
+function paintWeek(maxTemperature, minTemperature) {
+    const weekTemplete = `
+    <div class="row">
+        <div class="col-md-3 col-md-offset-4 col-xs-12">
+            <div class="row">
+                <canvas width="100" height="100" class="col-xs-2 icon-week"></canvas>            
+                <div class="col-xs-4">
+                    <h4>Lunes</h4>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <h4>${minTemperature}º - ${maxTemperature}º</h4>
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col-md-3 col-md-offset-4 col-xs-12">
+                        <div class="row">
+                            <canvas width="100" height="100" class="col-xs-2 icon-week"></canvas>            
+                            <div class="col-xs-4">
+                                <h5>Martes</h5>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <h5>${minTemperature}º - ${maxTemperature}º</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                                <div class="col-md-3 col-md-offset-4 col-xs-12">
+                                    <div class="row">
+                                        <canvas id="icon-weather" width="100" height="100" class="col-xs-2"></canvas>            
+                                        <div class="col-xs-4">
+                                            <h5>Miercoles</h5>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <h5>${minTemperature}º - ${maxTemperature}º</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-md-3 col-md-offset-4 col-xs-12">
+                                                <div class="row">
+                                                    <canvas id="icon-weather" width="100" height="100" class="col-xs-2"></canvas>            
+                                                    <div class="col-xs-4">
+                                                        <h5>Jueves</h5>
+                                                    </div>
+                                                    <div class="col-xs-6 text-right">
+                                                        <h5>${minTemperature}º - ${maxTemperature}º</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                        <div class="col-md-3 col-md-offset-4 col-xs-12">
+                                                            <div class="row">
+                                                                <canvas id="icon-weather" width="100" height="100" class="col-xs-2"></canvas>            
+                                                                <div class="col-xs-4">
+                                                                    <h5>Viernes</h5>
+                                                                </div>
+                                                                <div class="col-xs-6 text-right">
+                                                                    <h5>${minTemperature}º - ${maxTemperature}º</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                    <div class="col-md-3 col-md-offset-4 col-xs-12">
+                                                                        <div class="row">
+                                                                            <canvas id="icon-weather" width="100" height="100" class="col-xs-2"></canvas>            
+                                                                            <div class="col-xs-4">
+                                                                                <h5>Sábado</h5>
+                                                                            </div>
+                                                                            <div class="col-xs-6 text-right">
+                                                                                <h5>${minTemperature}º - ${maxTemperature}º</h5>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                                <div class="col-md-3 col-md-offset-4 col-xs-12">
+                                                                                    <div class="row">
+                                                                                        <canvas id="icon-weather" width="100" height="100" class="col-xs-2"></canvas>            
+                                                                                        <div class="col-xs-4">
+                                                                                            <h5>Domingo</h5>
+                                                                                        </div>
+                                                                                        <div class="col-xs-6 text-right">
+                                                                                            <h5>${minTemperature}º - ${maxTemperature}º</h5>
+                                                                                        </div>
+                                                                                    </div>`
+    const containerWeek = document.getElementById('weather_container_week');
+    containerWeek.innerHTML = weekTemplete
+}
 // api unsplash
 function getPhoto() {
     fetch(`https://source.unsplash.com/random`).then(function(response1){
@@ -128,17 +225,22 @@ function paintPicture(response1) {
     let photo = response1.url
     let urlString = "url(" + photo +")"
     // console.log(urlString)
-    const containerPhoto = document.getElementById('weather_container')
-    containerPhoto.style.backgroundImage = urlString
-    containerPhoto.style.backgroundSize = 'cover'
-    containerPhoto.style.backgroundPosition = 'center center'
-    containerPhoto.style.backgroundRepeat = 'no-repeat'
+    // const containerPhoto = document.getElementById('weather_container_week')
+    const containerPhoto = document.getElementsByClassName('photo-container')
+    const arrayContainerPhoto = Array.from(containerPhoto)
+
+    arrayContainerPhoto.forEach(item => {
+        item.style.backgroundImage = urlString
+        item.style.backgroundSize = 'cover'
+        item.style.backgroundPosition = 'center center'
+        item.style.backgroundRepeat = 'no-repeat'
+    })
 };
 
 // para los iconos
 function skycons(icon) {
-    console.log(icon)
-const icons = new Skycons({
+    // console.log(icon)
+    const icons = new Skycons({
             "color" : "white"})
 
     icons.set(document.getElementById('icon-weather'), icon)
@@ -146,3 +248,17 @@ const icons = new Skycons({
 // animate the icons
 icons.play();
 }
+
+// function skyconsWeek(weekIcon) {
+//     console.log(weekIcon)
+//     const icons = new Skycons({
+//             "color" : "white"})
+//     const arrayIconWeek = Array.from(document.getElementsByClassName('icon-week'))
+    
+
+//     icons.set(arrayIconWeek, weekIcon)
+ 
+// // animate the icons
+// icons.play();
+// }
+
