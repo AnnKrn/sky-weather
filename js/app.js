@@ -67,7 +67,7 @@ function getInfoWeather(json) {
 
 function paintWeather(degrees, wind, humidity, uvIndex, pressure) {
     templete =`<div class="row">
-    <canvas id="icon-weather" width="75" height="75" class="col-xs-6 col-xs-offset-3"></canvas>
+    <canvas id="icon-weather" width="100" height="100" class="col-xs-6 col-xs-offset-3"></canvas>
 </div>
 <div class="row">
     <div class="col-xs-6 col-xs-offset-3">
@@ -77,34 +77,34 @@ function paintWeather(degrees, wind, humidity, uvIndex, pressure) {
 <div class="row">
     <div class="col-md-3 col-md-offset-4 col-xs-12">
         <div class="row">
-            <div class="col-xs-6 text-center">
+            <div class="col-xs-6">
                 <h3>Wind</h3>
             </div>
-            <div class="col-xs-6 text-center">
+            <div class="col-xs-6 text-right">
                 <h3>${wind} m/s</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-6 text-center">
+            <div class="col-xs-6">
                 <h3>Humidity</h3>
             </div>
-            <div class="col-xs-6 text-center">
+            <div class="col-xs-6 text-right">
                 <h3>${humidity} %</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-6 text-center">
+            <div class="col-xs-6">
                 <h3>UV Index</h3>
             </div>
-            <div class="col-xs-6 text-center">
+            <div class="col-xs-6 text-right">
                 <h3>${uvIndex}</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-6 text-center">
+            <div class="col-xs-6">
                 <h3>Pressure</h3>
             </div>
-            <div class="col-xs-6 text-center">
+            <div class="col-xs-6 text-right">
                 <h3>${pressure} hPa</h3>
             </div>
         </div>
