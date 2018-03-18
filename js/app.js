@@ -67,9 +67,7 @@ function getInfoWeather(json) {
 
 function paintWeather(degrees, wind, humidity, uvIndex, pressure) {
     templete =`<div class="row">
-    <div class="col-xs-6 col-xs-offset-3">
-        <img src="https://dummyimage.com/150x150/" alt="">
-    </div>
+    <canvas id="icon-weather" width="75" height="75" class="col-xs-6 col-xs-offset-3"></canvas>
 </div>
 <div class="row">
     <div class="col-xs-6 col-xs-offset-3">
@@ -138,55 +136,12 @@ function paintPicture(response1) {
 };
 
 // para los iconos
-
-// const icons = new Skycons({"color":"#fff"}),
-// list  = [ "clear-day", "clear-night", "partly-cloudy-day","partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind","fog"],
-//           console.log(i)
-
-//     //   for(i = list.length; i--; ){
-//     //     icons.set(list[i], list[i]);
-//     //     console.log(icons)
-//     //   }
-//       icons.play();
-
-// function getIcons () {
-//     let skycons = new Skycons({"color": "#fff"})
-//     skycons.add("icon", Skycons.PARTLY_CLOUDY_DAY);
-//     console.log(skycons)
-// }
-
-// getIcons()
 function skycons(icon) {
-    var i,
-        icons = new Skycons({
-            "color" : "#FFFFFF",
-        }),
-        list  = [ // listing of all possible icons
-            "clear-day",
-            "clear-night",
-            "partly-cloudy-day",
-            "partly-cloudy-night",
-            "cloudy",
-            "rain",
-            "sleet",
-            "snow",
-            "wind",
-            "fog"
-        ];
+    console.log(icon)
+const icons = new Skycons({
+            "color" : "white"})
 
-// loop thru icon list array
-// for(i = 10; list.length; i--) {
-//     let weatherType = list[i] // select each icon from list array
-//             // icons will have the name in the array above attached to the 
-//             // canvas element as a class so let's hook into them.
-//             // elements = document.getElementsByClassName( weatherType );
-           
-//     // loop thru the elements now and set them up
-//     // for (e = elements.length; e--;) {
-//     //     icons.set(elements[e], weatherType);
-//     // }
-
-// }
+    icons.set(document.getElementById('icon-weather'), icon)
  
 // animate the icons
 icons.play();
