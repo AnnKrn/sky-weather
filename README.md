@@ -5,4 +5,4 @@ This is a Web App to consult the weather and other particularities. In this proy
 ![Weather-preview](https://user-images.githubusercontent.com/32860008/38113803-4ea21e98-3363-11e8-8e1e-276a1ab60957.png)
 
 
-### Develop for Laboratoria (http://laboratoria.la)
+### Developed for Laboratoria (http://laboratoria.la)
