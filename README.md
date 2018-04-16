@@ -1,4 +1,4 @@
-## Weather Web App
+# Weather Web App
 
 This is a Web App to consult the weather and other particularities. In this proyect I use the Dark Sky API with the method fetch and Skyicons from the same API. I use JavaScript and the framework Bootstrap
 
